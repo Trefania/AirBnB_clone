@@ -38,9 +38,12 @@ class TestBaseModel(unittest.TestCase):
 
     def test_models_values(self):
         """Tests Values of Models"""
-        self.assertEqual([self.model1.name,self.model1.my_number],["First Model",89])
-        self.assertEqual([self.model2.name, self.model2.my_number], ["Second Model", 99])
-        self.assertEqual([self.model3.name, self.model3.my_number],["Third Model", 35])
+        self.assertEqual
+        ([self.model1.name, self.model1.my_number], ["First Model", 89])
+        self.assertEqual
+        ([self.model2.name, self.model2.my_number], ["Second Model", 99])
+        self.assertEqual
+        ([self.model3.name, self.model3.my_number], ["Third Model", 35])
 
     def test_datetime(self):
         """Test for current date and time"""
@@ -56,13 +59,17 @@ class TestBaseModel(unittest.TestCase):
         new_model2 = BaseModel(**model2_dict)
         new_model3 = BaseModel(**model3_dict)
 
-        self.assertEqual(type(new_model1.created_at),"<class 'datetime.datetime'>")
-        self.assertEqual(type(new_model2.created_at),"<class 'datetime.datetime'>")
-        self.assertEqual(type(new_model3.created_at),"<class 'datetime.datetime'>")
+        self.assertEqual
+        (type(new_model1.created_at), "<class 'datetime.datetime'>")
+        self.assertEqual
+        (type(new_model2.created_at), "<class 'datetime.datetime'>")
+        self.assertEqual
+        (type(new_model3.created_at), "<class 'datetime.datetime'>")
 
-        self.assertFalse(model1 is new_model1)
-        self.assertFalse(model2 is new_model2)
-        self.assertFalse(model3 is new_model3)
+        self.assertFalse(self.model1 is new_model1)
+        self.assertFalse(self.model2 is new_model2)
+        self.assertFalse(self.model3 is new_model3)
+
 
 if __name__ == '__main__':
-    unittest.main() 
+    unittest.main()
