@@ -21,15 +21,31 @@ class BaseModel():
                 of __dict__ of the instance.
     """
 
-    def __init__(self):
-        """Initialization of the Class"""
-        self.id = str(uuid.uuid4())
-        self.created_at = dt.now()
-        self.updated_at = dt.now()
+    def __init__(self, *args, **kwargs):
+        """Initialization of the Class
+        Args:
+            args - not used
+            kwargs - keywords arguments/ dictionary.
+        """
+        format_data = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            for k, v in kwargs.items():
+                if not k == "__class__":
+                    if k == "id":
+                        self.__dict__[k] = str(v)
+                    if k == "created_at" or k == "updated_at":
+                        self.__dict__[k] = dt.strptime(v, format_data)
+                    setattr(self, k, v)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = dt.now()
+            self.updated_at = dt.now()
 
     def __str__(self):
         """String Representation"""
-        return "[{}], ({}), {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}], ({}), {}".format(self.
+                                       __class__.__name__, self.id, self.
+                                       __dict__)
 
     def save(self):
         """Updates the public instance attribute 'updated_at'
@@ -44,7 +60,7 @@ class BaseModel():
         """
         our_dict = {}
         our_dict["__class__"] = self.__class__.__name__
-        for k,v in self.__dict__.items():
+        for k, v in self.__dict__.items():
             if k == "created_at":
                 our_dict[k] = v.isoformat()
             elif k == "updated_at":
