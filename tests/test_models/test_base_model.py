@@ -45,7 +45,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual([self.model3.name, self.model3.my_number], [
                          "Third Model", 35])
 
-   def test_datetime(self):
+    def test_datetime(self):
         """Test for current date and time"""
         pass
 
