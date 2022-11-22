@@ -55,9 +55,9 @@ class TestBaseModel(unittest.TestCase):
         model2_dict = self.model2.to_dict()
         model3_dict = self.model3.to_dict()
 
-    new_model1 = BaseModel(**model1_dict)
-    new_model2 = BaseModel(**model2_dict)
-    new_model3 = BaseModel(**model3_dict)
+        new_model1 = BaseModel(**model1_dict)
+        new_model2 = BaseModel(**model2_dict)
+        new_model3 = BaseModel(**model3_dict)
 
         self.assertEqual
         (type(new_model1.created_at), "<class 'datetime.datetime'>")
