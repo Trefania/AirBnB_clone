@@ -46,6 +46,23 @@ class TestBaseModel(unittest.TestCase):
         """Test for current date and time"""
         pass
 
+    def test_kwargs(self):
+        """testing kwargs and args"""
+        model1_dict = self.model1.to_dict()
+        model2_dict = self.model2.to_dict()
+        model3_dict = self.model3.to_dict()
+
+        new_model1 = BaseModel(**model1_dict)
+        new_model2 = BaseModel(**model2_dict)
+        new_model3 = BaseModel(**model3_dict)
+
+        self.assertEqual(type(new_model1.created_at),"<class 'datetime.datetime'>")
+        self.assertEqual(type(new_model2.created_at),"<class 'datetime.datetime'>")
+        self.assertEqual(type(new_model3.created_at),"<class 'datetime.datetime'>")
+
+        self.assertFalse(model1 is new_model1)
+        self.assertFalse(model2 is new_model2)
+        self.assertFalse(model3 is new_model3)
+
 if __name__ == '__main__':
-    unittest.main()
- 
+    unittest.main() 
