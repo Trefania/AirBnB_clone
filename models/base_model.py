@@ -35,7 +35,8 @@ class BaseModel():
                         self.__dict__[k] = str(v)
                     if k == "created_at" or k == "updated_at":
                         self.__dict__[k] = dt.strptime(v, format_data)
-                    setattr(self, k, v)
+                    else:
+                        setattr(self, k, v)
         else:
             self.id = str(uuid.uuid4())
             self.created_at = dt.now()
