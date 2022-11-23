@@ -66,13 +66,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual
         (type(new_model3.created_at), "<class 'datetime.datetime'>")
 
-        self.assertEqual(type(new_model1.created_at),
-                         "<class 'datetime.datetime'>")
-        self.assertEqual(type(new_model2.created_at),
-                         "<class 'datetime.datetime'>")
-        self.assertEqual(type(new_model3.created_at),
-                         "<class 'datetime.datetime'>")
-
 
 if __name__ == '__main__':
     unittest.main()
