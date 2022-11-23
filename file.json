@@ -1,0 +1,2 @@
+
+{"BaseModel.[BaseModel], (65f6381c-c126-4b4c-b4a1-0574f220de89), {'id': '65f6381c-c126-4b4c-b4a1-0574f220de89', 'created_at': datetime.datetime(2022, 11, 24, 0, 22, 19, 298227), 'updated_at': datetime.datetime(2022, 11, 24, 0, 22, 19, 298244)}": {"__class__": "BaseModel", "id": "65f6381c-c126-4b4c-b4a1-0574f220de89", "created_at": "2022-11-24T00:22:19.298227", "updated_at": "2022-11-24T00:22:19.298284", "name": "My_First_Model", "my_number": 89}}
