@@ -4,6 +4,10 @@ The Module includes a class that performs serialization
 and Deserialization.
 """
 import json
+from models.base_model import BaseModel
+
+
+class_dict = {"BaseModel": BaseModel}
 
 
 class FileStorage():
@@ -26,18 +30,21 @@ class FileStorage():
         """Sets in '__objects' the obj with key
         <obj class name>.id
         """
-        obj_key = obj.__class__.__name__ + '.' + str(obj)
+        obj_key = obj.__class__.__name__ + '.' + str(obj.id)
+        # print(obj_key)
         FileStorage.__objects[obj_key] = obj
+        print(FileStorage.__objects)
 
     def save(self):
         """Serializes '__objects' to the JSON file,
         (path: __file_path)
         """
+        from models.base_model import BaseModel
         filename = FileStorage.__file_path
         my_obj = {}
         for k, v in FileStorage.__objects.items():
             my_obj[k] = v.to_dict()
-        with open(filename, mode='a', encoding='utf-8') as f:
+        with open(filename, mode='w', encoding='utf-8') as f:
             json.dump(my_obj, f)
 
     def reload(self):
@@ -49,7 +56,12 @@ class FileStorage():
         try:
             with open(filename, mode='r', encoding='utf-8') as f:
                 my_dict = json.load(f)
-                for v in my_dict.values():
-                    self.new(eval(v["__class__"])(**v))
+                # print(my_dict)
+                for k in my_dict.keys():
+                    class_name = my_dict[k]["__class__"]
+                    instance = my_dict[k]
+                    FileStorage.__objects[k] = class_dict[class_name](
+                        **instance)
+
         except Exception:
             pass

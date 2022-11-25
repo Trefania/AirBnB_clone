@@ -4,7 +4,6 @@ The base_model module contains the BaseModel Class
 """
 import uuid
 from datetime import datetime as dt
-from models import storage
 
 
 class BaseModel():
@@ -28,6 +27,8 @@ class BaseModel():
             args - not used
             kwargs - keywords arguments/ dictionary.
         """
+        from models import storage
+
         format_data = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
             for k, v in kwargs.items():
@@ -54,6 +55,8 @@ class BaseModel():
         """Updates the public instance attribute 'updated_at'
         with the current datetime
         """
+        from models import storage
+
         self.updated_at = dt.now()
         storage.save()
 
