@@ -33,7 +33,6 @@ class FileStorage():
         obj_key = obj.__class__.__name__ + '.' + str(obj.id)
         # print(obj_key)
         FileStorage.__objects[obj_key] = obj
-        print(FileStorage.__objects)
 
     def save(self):
         """Serializes '__objects' to the JSON file,
