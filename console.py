@@ -4,6 +4,11 @@ containing the entry point of the command interpreter.
 """
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.place import Place
+from models.city import City
+from models.review import Review
+from models.state import State
 import cmd
 from models import storage
 from models.engine.file_storage import class_dict
@@ -39,17 +44,22 @@ class HBNBCommand(cmd.Cmd):
         elif lst[0] not in class_dict.keys():
             print("** class doesn't exist **")
         else:
-            temp = eval(args)()
+            temp = eval(lst[0])()
             temp.save()
             print(temp.id)
 
     def do_show(self, line):
         """
-        show: Prints the string representation of an instance based on the class name and id. Ex: $ show BaseModel 1234-1234-1234.
-        -> If the class name is missing, print ** class name missing ** (ex: $ show)
-        -> If the class name doesn’t exist, print ** class doesn't exist ** (ex: $ show MyModel)
-        -> If the id is missing, print ** instance id missing ** (ex: $ show BaseModel)
-        -> If the instance of the class name doesn’t exist for the id, print ** no instance found ** (ex: $ show BaseModel 121212)
+        show: Prints the string representation of an instance based
+         on the class name and id. Ex: $ show BaseModel 1234-1234-1234.
+        -> If the class name is missing, print ** class name missing **
+        (ex:$show)
+        -> If the class name doesn’t exist, print ** class doesn't exist **
+        (ex: $ show MyModel)
+        -> If the id is missing, print ** instance id missing **
+        (ex: $ show BaseModel)
+        -> If the instance of the class name doesn’t exist for the id,
+        print ** no instance found ** (ex: $ show BaseModel 121212)
         """
         lst = []
         for args in line.split():
@@ -72,11 +82,17 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """
-        destroy: Deletes an instance based on the class name and id (save the change into the JSON file). Ex: $ destroy BaseModel 1234-1234-1234.
-        -> If the class name is missing, print ** class name missing ** (ex: $ destroy)
-        -> If the class name doesn’t exist, print ** class doesn't exist ** (ex:$ destroy MyModel)
-        -> If the id is missing, print ** instance id missing ** (ex: $ destroy BaseModel)
-        -> If the instance of the class name doesn’t exist for the id, print ** no instance found ** (ex: $ destroy BaseModel 121212)
+        destroy: Deletes an instance based on the class name and id
+        (save the change into the JSON file).
+        Ex: $ destroy BaseModel 1234-1234-1234.
+        -> If the class name is missing, print ** class name missing **
+        (ex: $ destroy)
+        -> If the class name doesn’t exist, print ** class doesn't exist **
+        (ex:$ destroy MyModel)
+        -> If the id is missing, print ** instance id missing **
+        (ex: $ destroy BaseModel)
+        -> If the instance of the class name doesn’t exist for the id,
+        print ** no instance found ** (ex: $ destroy BaseModel 121212)
         """
         lst = []
         for args in line.split():
@@ -100,9 +116,13 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """
-        all: Prints all string representation of all instances based or not on the class name. Ex: $ all BaseModel or $ all.
-        -> The printed result must be a list of strings (like the example below)
-        -> If the class name doesn’t exist, print ** class doesn't exist ** (ex: $ all MyModel)
+        all:
+        Prints all string representation of all instances based or not on the
+        class name.
+        Ex: $ all BaseModel or $ all.
+        -> The printed result must be a list of strings(like the example below)
+        -> If the class name doesn’t exist, print ** class doesn't exist **
+        (ex: $ all MyModel)
         """
         lst = []
         my_dict = storage.all()
@@ -125,20 +145,36 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """
-        update: Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file). Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
+        update: Updates an instance based on the class name
+        and id by adding or updating attribute
+        (save the change into the JSON file).
+        Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
         -> Usage: update <class name> <id> <attribute name> "<attribute value>"
         -> Only one attribute can be updated at the time
         -> You can assume the attribute name is valid (exists for this model)
         -> The attribute value must be casted to the attribute type
-        -> If the class name is missing, print ** class name missing ** (ex: $ update)
-        -> If the class name doesn’t exist, print ** class doesn't exist ** (ex: $ update MyModel)
-        -> If the id is missing, print ** instance id missing ** (ex: $ update BaseModel)
-        -> If the instance of the class name doesn’t exist for the id, print ** no instance found ** (ex: $ update BaseModel 121212)
-        -> If the attribute name is missing, print ** attribute name missing ** (ex: $ update BaseModel existing-id)
-        -> If the value for the attribute name doesn’t exist, print ** value missing ** (ex: $ update BaseModel existing-id first_name)
-        -> All other arguments should not be used (Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com" first_name "Betty" = $ update BaseModel 1234-1234-1234 email "aibnb@mail.com")
-        -> id, created_at and updated_at cant’ be updated. You can assume they won’t be passed in the update command
-        -> Only “simple” arguments can be updated: string, integer and float. You can assume nobody will try to update list of ids or datetime
+        -> If the class name is missing,
+        print ** class name missing ** (ex: $ update)
+        -> If the class name doesn’t exist,
+        print **class doesn't exist**(ex: $ update MyModel)
+        -> If the id is missing,
+        print ** instance id missing ** (ex: $ update BaseModel)
+        -> If the instance of the class name doesn’t exist for the id,
+        print ** no instance found ** (ex: $ update BaseModel 121212)
+        -> If the attribute name is missing,
+        print ** attribute name missing **
+        (ex: $ update BaseModel existing-id)
+        -> If the value for the attribute name doesn’t exist,
+        print ** value missing **
+        (ex: $ update BaseModel existing-id first_name)
+        -> All other arguments should not be used
+        (Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"
+         first_name "Betty" = $ update BaseModel 1234-1234-1234
+         email "aibnb@mail.com")
+        -> id, created_at and updated_at cant’ be updated.
+        You can assume they won’t be passed in the update command
+        -> Only “simple” arguments can be updated: string, integer and float.
+        You can assume nobody will try to update list of ids or datetime
         """
         import shlex
 
