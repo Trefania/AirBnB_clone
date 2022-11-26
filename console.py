@@ -3,10 +3,10 @@
 containing the entry point of the command interpreter.
 """
 from models.base_model import BaseModel
-from models import storage
+from models.user import User
 import cmd
-
-class_dict = {"BaseModel": BaseModel}
+from models import storage
+from models.engine.file_storage import class_dict
 
 
 class HBNBCommand(cmd.Cmd):
@@ -31,16 +31,17 @@ class HBNBCommand(cmd.Cmd):
         (ex: $ create)
         If the class name doesn’t exist, print ** class doesn't exist
         ** (ex: $ create MyModel)"""
-
+        lst = []
         for args in line.split():
-            if args is None:
-                print("** class name missing **")
-            elif args not in class_dict.keys():
-                print("** class doesn't exist **")
-            else:
-                temp = eval(args)()
-                temp.save()
-                print(temp.id)
+            lst.append(args)
+        if len(lst) < 1:
+            print("** class name missing **")
+        elif lst[0] not in class_dict.keys():
+            print("** class doesn't exist **")
+        else:
+            temp = eval(args)()
+            temp.save()
+            print(temp.id)
 
     def do_show(self, line):
         """
@@ -172,14 +173,20 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
 
-        update_dict = {}
+        update_dict = {}  # initialised a temporary dictionary
+        # duplicating my_dict into update_dict
         for k, v in my_dict.items():
             update_dict[k] = v.to_dict()
+        # appending to my duplicated dictionary.
+        # Ln 184. referring to the clsid value.
         inner = update_dict[clsid]
+        # Ln 186.  appending to the clsid value.
         inner[attr_name] = attr_val
+        # getting all keys in the temporary dictionary.
         for k in update_dict.keys():
+            class_name = update_dict[k]["__class__"]
             new_instance = update_dict[k]
-            storage.new(eval(cls_name)(**new_instance))
+            storage.new(eval(class_name)(**new_instance))
             storage.save()
 
 

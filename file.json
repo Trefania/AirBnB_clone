@@ -1,1 +1,26 @@
-{"BaseModel.076ac884-414f-49fe-bf71-ffecc97ac9b0": {"__class__": "BaseModel", "id": "076ac884-414f-49fe-bf71-ffecc97ac9b0", "created_at": "2022-11-26T01:36:44.219902", "updated_at": "2022-11-26T01:36:44.219956", "name": "McDonald", "email": "mcdonalsamure91@gmail.com"}}
+{
+	"BaseModel.28dd3327-ebcc-4d64-bc4a-b4387ce7ea50": {
+		"__class__": "BaseModel",
+		"id": "28dd3327-ebcc-4d64-bc4a-b4387ce7ea50",
+		"created_at": "2022-11-26T14:21:30.756549",
+		"updated_at": "2022-11-26T14:21:30.756594",
+		"name": "Trefania",
+		"career": "Software Engineer",
+		"email": "trefania@gmail.com"
+	},
+	"BaseModel.c3b66686-1721-4875-aa72-625ac80ce51c": {
+		"__class__": "BaseModel",
+		"id": "c3b66686-1721-4875-aa72-625ac80ce51c",
+		"created_at": "2022-11-26T14:21:37.263474",
+		"updated_at": "2022-11-26T14:21:37.263495"
+	},
+	"User.74b3d312-a1cf-401e-bf4d-885832b6eaa9": {
+		"__class__": "User",
+		"id": "74b3d312-a1cf-401e-bf4d-885832b6eaa9",
+		"created_at": "2022-11-26T14:28:42.685952",
+		"updated_at": "2022-11-26T14:28:42.685976",
+		"name": "Emmanuel",
+		"email": "emmanuel@gmail.com",
+		"password": "fash"
+	}
+}

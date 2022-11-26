@@ -5,9 +5,10 @@ and Deserialization.
 """
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
-class_dict = {"BaseModel": BaseModel}
+class_dict = {"BaseModel": BaseModel, "User": User}
 
 
 class FileStorage():
@@ -39,6 +40,7 @@ class FileStorage():
         (path: __file_path)
         """
         from models.base_model import BaseModel
+        # from models.user import User
         filename = FileStorage.__file_path
         my_obj = {}
         for k, v in FileStorage.__objects.items():
