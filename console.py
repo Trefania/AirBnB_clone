@@ -142,9 +142,10 @@ class HBNBCommand(cmd.Cmd):
                 if str(k).startswith(lst[0]):
                     lst2.append(str(my_dict[k]))
             print(lst2)
+        return lst2
 
     def do_update(self, line):
-        """
+        """c
         update: Updates an instance based on the class name
         and id by adding or updating attribute
         (save the change into the JSON file).
@@ -228,6 +229,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line: str):
         parser_dict = {
             "all": self.do_all,
+            "count": self.do_count,
         }
         lst = []
         for args in line.split('.'):
@@ -238,6 +240,20 @@ class HBNBCommand(cmd.Cmd):
         if method in parser_dict:
             parser_dict[method](cls_name)
         # print(lst)
+
+    def do_count(self, line: str):
+        import shlex
+        line = shlex.split(line)
+        my_dict = storage.all()
+        my_list = []
+        cls_name = line[0]
+        if cls_name not in class_dict.keys():
+            print("** class doesn't exist **")
+        else:
+            for instances in my_dict.keys():
+                if str(instances).startswith(cls_name):
+                    my_list.append(str(my_dict[instances]))
+            print(len(my_list))
 
 
 if __name__ == '__main__':
