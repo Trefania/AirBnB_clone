@@ -225,6 +225,20 @@ class HBNBCommand(cmd.Cmd):
             storage.new(eval(class_name)(**new_instance))
             storage.save()
 
+    def default(self, line: str):
+        parser_dict = {
+            "all": self.do_all,
+        }
+        lst = []
+        for args in line.split('.'):
+            lst.append(args)
+        lst[1] = lst[1].replace("()", "")
+        cls_name = lst[0]
+        method = lst[1]
+        if method in parser_dict:
+            parser_dict[method](cls_name)
+        # print(lst)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

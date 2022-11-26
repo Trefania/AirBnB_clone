@@ -16,14 +16,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-
-    # def __init__(self):
-    #     """Initialization"""
-    #     from models import storage
-    #     super.__init__()
-    #     storage.new(self)
-
-    # def save(self):
-    #     """Saves all User Instances Created."""
-    #     from models import storage
-    #     storage.save()
