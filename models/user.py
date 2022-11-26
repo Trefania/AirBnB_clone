@@ -1,5 +1,5 @@
 from models.base_model import BaseModel
-b  # !/usr/bin/python3
+# !/usr/bin/python3
 """User Class Module that inherits from BaseModel"""
 
 
