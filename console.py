@@ -145,35 +145,29 @@ class HBNBCommand(cmd.Cmd):
         return lst2
 
     def do_update(self, line):
-        """c
+        """
         update: Updates an instance based on the class name
         and id by adding or updating attribute
         (save the change into the JSON file).
         Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
-        -> Usage: update <class name> <id> <attribute name> "<attribute value>"
+        -> Use1: update <class name> <id> <attribute name> "<attribute value>"
         -> Only one attribute can be updated at the time
-        -> You can assume the attribute name is valid (exists for this model)
-        -> The attribute value must be casted to the attribute type
+        -> Use2: <class name>.update(<id>, <attribute name>, <attribute value>)
+        -> Use3: <class name>.update(<id>, <dict of keys and values>)
         -> If the class name is missing,
-        print ** class name missing ** (ex: $ update)
+        it prints "** class name missing **" (ex: $ update)
         -> If the class name doesn’t exist,
-        print **class doesn't exist**(ex: $ update MyModel)
+        it prints **class doesn't exist**(ex: $ update MyModel)
         -> If the id is missing,
-        print ** instance id missing ** (ex: $ update BaseModel)
+        it prints ** instance id missing ** (ex: $ update BaseModel)
         -> If the instance of the class name doesn’t exist for the id,
-        print ** no instance found ** (ex: $ update BaseModel 121212)
+        it prints ** no instance found ** (ex: $ update BaseModel 121212)
         -> If the attribute name is missing,
-        print ** attribute name missing **
+        it prints ** attribute name missing **
         (ex: $ update BaseModel existing-id)
         -> If the value for the attribute name doesn’t exist,
-        print ** value missing **
+        it prints ** value missing **
         (ex: $ update BaseModel existing-id first_name)
-        -> All other arguments should not be used
-        (Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"
-         first_name "Betty" = $ update BaseModel 1234-1234-1234
-         email "aibnb@mail.com")
-        -> id, created_at and updated_at cant’ be updated.
-        You can assume they won’t be passed in the update command
         -> Only “simple” arguments can be updated: string, integer and float.
         You can assume nobody will try to update list of ids or datetime
         """
@@ -227,21 +221,53 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def default(self, line: str):
+        """
+        Indicate that the function argument will take that value,
+        if no argument value is passed during the function call.
+        Syntax: <class name>.method()
+        """
+        import shlex
         parser_dict = {
             "all": self.do_all,
             "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update,
+            "create": self.do_create
         }
         lst = []
-        for args in line.split('.'):
-            lst.append(args)
-        lst[1] = lst[1].replace("()", "")
+        line = line.replace("(", " ").replace(".", " ")\
+            .replace(")", "").replace(",", " ").replace(":", "")\
+            .replace("{", " ").replace("}", " ").replace("  ", " ")
+        lst = shlex.split(line)
         cls_name = lst[0]
-        method = lst[1]
-        if method in parser_dict:
-            parser_dict[method](cls_name)
-        # print(lst)
+        try:
+            method = lst[1]
+            if method in parser_dict:
+                if len(lst) == 2:
+                    parser_dict[method](cls_name)
+                elif len(lst) == 3:
+                    arguments = f"'{cls_name}' '{lst[2]}'"
+                    parser_dict[method](arguments)
+                elif len(lst) == 4:
+                    to_dct = lst[3:]
+                    dict = {to_dct[i]: to_dct[i + 1]
+                            for i in range(0, len(to_dct), 2)}
+                    for k, v in dict.items():
+                        arguments = f"'{cls_name}' '{lst[2]}' '{k}' '{v}'"
+                        parser_dict[method](arguments)
+                else:
+                    arguments = f"'{cls_name}' '{lst[2]}' '{lst[3]}' '{lst[4]}'"
+                    parser_dict[method](arguments)
+            else:
+                raise Exception(f"*** Unknown syntax: {line}")
+        except Exception:
+            print(f"*** Unknown syntax: {line}")
 
     def do_count(self, line: str):
+        """counts the instances of class
+        syntax: <class name>.count()
+        """
         import shlex
         line = shlex.split(line)
         my_dict = storage.all()
@@ -254,6 +280,11 @@ class HBNBCommand(cmd.Cmd):
                 if str(instances).startswith(cls_name):
                     my_list.append(str(my_dict[instances]))
             print(len(my_list))
+
+    # Alias Functions
+    do_q = do_quit
+    do_a = do_all
+    do_c = do_create
 
 
 if __name__ == '__main__':
