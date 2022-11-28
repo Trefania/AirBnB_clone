@@ -85,7 +85,7 @@ class BaseModel():
         # Initialised an empty dictionary
         our_dict = {}
         # Assigns the __class__ to the class name.
-        our_dict["__class__"] = self.__class__.__names__
+        our_dict["__class__"] = self.__class__.__name__
         # iterates through the self dictionary items
         for k, v in self.__dict__.items():
             # If key equals created at.

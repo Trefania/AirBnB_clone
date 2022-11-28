@@ -29,7 +29,7 @@ class FileStorage():
     A Class that serializes instances to a JSON file
     and deserializes JSON file to instances.
     """
-    __file_path = "file.json"
+    __file_path = "test.json"
     __objects = {}
 
     def __init__(self):

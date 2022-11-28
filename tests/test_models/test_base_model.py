@@ -45,9 +45,23 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual([self.model3.name, self.model3.my_number], [
                          "Third Model", 35])
 
-    def test_datetime(self):
-        """Test for current date and time"""
-        pass
+    def test_id_type(self):
+        """Test for id type"""
+        self.assertTrue(type(self.model1.id), str)
+        self.assertTrue(type(self.model2.id), str)
+        self.assertTrue(type(self.model3.id), str)
+
+    def test_created_at_type(self):
+        """Test for created_at type"""
+        self.assertTrue(type(self.model1.created_at), datetime)
+        self.assertTrue(type(self.model2.created_at), datetime)
+        self.assertTrue(type(self.model3.created_at), datetime)
+
+    def test_updated_at_type(self):
+        """Test for updated_at type"""
+        self.assertTrue(type(self.model1.updated_at), datetime)
+        self.assertTrue(type(self.model2.updated_at), datetime)
+        self.assertTrue(type(self.model3.updated_at), datetime)
 
     def test_kwargs(self):
         """testing kwargs and args"""
@@ -65,7 +79,6 @@ class TestBaseModel(unittest.TestCase):
         (type(new_model2.created_at), "<class 'datetime.datetime'>")
         self.assertEqual
         (type(new_model3.created_at), "<class 'datetime.datetime'>")
-
 
 if __name__ == '__main__':
     unittest.main()
