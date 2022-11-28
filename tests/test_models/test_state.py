@@ -18,7 +18,7 @@ class TestState(unittest.TestCase):
     """Test Cases for the State class."""
 
     def setUp(self):
-        """Sets up test methods."""
+        """Sets up test methodss."""
         pass
 
     def tearDown(self):
