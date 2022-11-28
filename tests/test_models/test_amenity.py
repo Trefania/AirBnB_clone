@@ -32,7 +32,7 @@ class TestAmenity(unittest.TestCase):
         if os.path.isfile(FileStorage._FileStorage__file_path):
             os.remove(FileStorage._FileStorage__file_path)
 
-    def test_8_instantiation(self):
+    def test_instances(self):
         """Tests instantiation of Amenity class."""
 
         b = Amenity()
@@ -40,7 +40,7 @@ class TestAmenity(unittest.TestCase):
         self.assertIsInstance(b, Amenity)
         self.assertTrue(issubclass(type(b), BaseModel))
 
-    def test_8_attributes(self):
+    def test_attributes(self):
         """Tests the attributes of Amenity class."""
         attributes = storage.attributes()["Amenity"]
         o = Amenity()
