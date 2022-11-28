@@ -11,6 +11,7 @@ from models.engine.file_storage import FileStorage
 import os
 from models import storage
 from models.base_model import BaseModel
+from models.engine.file_storage import attributes
 
 
 class TestCity(unittest.TestCase):
@@ -42,9 +43,9 @@ class TestCity(unittest.TestCase):
 
     def test_attributes(self):
         """Tests the attributes of City class."""
-        attributes = storage.attributes()["City"]
+        attribute = attributes["City"]
         o = City()
-        for k, v in attributes.items():
+        for k, v in attribute.items():
             self.assertTrue(hasattr(o, k))
             self.assertEqual(type(getattr(o, k, None)), v)
 
