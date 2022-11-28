@@ -27,8 +27,8 @@ class_dict = {
 attributes = {
             "BaseModel":
                      {"id": str,
-                      "created_at": datetime.datetime,
-                      "updated_at": datetime.datetime},
+                      "created_at": datetime,
+                      "updated_at": datetime},
             "User":
                      {"email": str,
                       "password": str,
