@@ -267,11 +267,12 @@ class HBNBCommand(cmd.Cmd):
                         # print(arguments)
                         parser_dict[method](arguments)
                 else:
-                    arguments = f"'{cls_name}' '{lst[2]}' '{lst[3]}' '{lst[4]}'"
+                    arguments = f"'{cls_name}' '{lst[2]}' '{lst[3]}' \
+                        '{lst[4]}'"
                     parser_dict[method](arguments)
             else:
                 raise Exception(f"*** Unknown syntax: {line}")
-        except:
+        except Exception:
             raise Exception(f"*** Unknown syntax: {line}")
 
     def do_count(self, line: str):
