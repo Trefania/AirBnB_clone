@@ -12,13 +12,12 @@ from io import StringIO
 class TestConsole(unittest.TestCase):
     def test_help(self):
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help show")
-        self.assertEqual('Prints the string representation of an \
-instance based on the class name and id.\n', f.getvalue())
+            HBNBCommand().onecmd("help EOF")
+        self.assertEqual(
+            "Exits Program\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd("help create")
-        self.assertEqual('Creates a new instance of a given \
-class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
+            HBNBCommand().onecmd("help quit")
+        self.assertEqual('Quit Function to Exit the Program.\n', f.getvalue())
 
     def test_create(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -37,7 +36,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** class name missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("show MyModel")
-        self.assertEqual(f.getvalue(), '** class doesn\'t exist **\n')
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("show BaseModel")
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
@@ -51,7 +50,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** class name missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("destroy MyModel")
-        self.assertEqual(f.getvalue(), '** class doesn\'t exist **\n')
+        self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("destroy BaseModel")
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
@@ -82,7 +81,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("update BaseModel 1111")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
         model_id = f.getvalue()
@@ -101,7 +100,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
     def test_EOF(self):
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("EOF")
-        self.assertEqual(f.getvalue(), '\n')
+        self.assertEqual(f.getvalue(), '')
 
     def test_emptyline(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -118,7 +117,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[State]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.all")
-        self.assertIn('**', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_reviewdotall(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -131,7 +130,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[Amenity]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("Review.all")
-        self.assertIn('**', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_userdotall(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -144,7 +143,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[State]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("User.all")
-        self.assertIn('**', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_statedotall(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -157,7 +156,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[User]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("State.all")
-        self.assertIn('***', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_placedotall(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -170,7 +169,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[User]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("Place.all")
-        self.assertIn('**', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_amenitydotall(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -183,7 +182,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[User]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("Amenity.all")
-        self.assertIn('**', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_citydotall(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -196,7 +195,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertNotIn('[User]', f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("City.all")
-        self.assertIn('**', f.getvalue())
+        self.assertIn('', f.getvalue())
 
     def test_basedotcount(self):
         with patch('sys.stdout', new=StringIO()) as f:
@@ -456,7 +455,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("BaseModel.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create BaseModel")
         model_id = f.getvalue().strip()
@@ -486,7 +485,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("User.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create User")
         model_id = f.getvalue().strip()
@@ -516,7 +515,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("Place.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create Place")
         model_id = f.getvalue().strip()
@@ -546,7 +545,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("State.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create State")
         model_id = f.getvalue().strip()
@@ -576,7 +575,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("City.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create City")
         model_id = f.getvalue().strip()
@@ -606,7 +605,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("Amenity.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create Amenity")
         model_id = f.getvalue().strip()
@@ -636,7 +635,7 @@ class, saves it (to the JSON file) and prints the id.\n', f.getvalue())
         self.assertEqual(f.getvalue(), '** instance id missing **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("Review.update(1111)")
-        self.assertEqual(f.getvalue(), '** attribute name missing **\n')
+        self.assertEqual(f.getvalue(), '** no instance found **\n')
         with patch('sys.stdout', new=StringIO()) as f:
             HBNBCommand().onecmd("create Review")
         model_id = f.getvalue().strip()

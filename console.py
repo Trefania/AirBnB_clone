@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quit Function to Exit the Program."""
-        quit()
+        return True
 
     def do_create(self, line):
         """create: Creates a new instance of BaseModel, saves it (to
@@ -98,7 +98,7 @@ class HBNBCommand(cmd.Cmd):
         import shlex
 
         lst = shlex.split(line)
-        print(lst)
+        # print(lst)
         if len(lst) < 1:
             print("** class name missing **")
         elif len(lst) < 2:
@@ -254,6 +254,9 @@ class HBNBCommand(cmd.Cmd):
                 elif len(lst) == 3:
                     arguments = f"{cls_name} {lst[2]}"
                     # print(arguments)
+                    parser_dict[method](arguments)
+                elif len(lst) == 4:
+                    arguments = f"{cls_name} {lst[2]} {lst[3]}"
                     parser_dict[method](arguments)
                 elif len(lst) > 5:
                     to_dct = lst[3:]
