@@ -27,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quit Function to Exit the Program."""
-        quit()
+        return True
 
     def do_create(self, line):
         """create: Creates a new instance of BaseModel, saves it (to
@@ -64,6 +64,7 @@ class HBNBCommand(cmd.Cmd):
         lst = []
         for args in line.split():
             lst.append(args)
+        # print(lst)
         if len(lst) < 1:
             print("** class name missing **")
         elif len(lst) < 2:
@@ -94,9 +95,10 @@ class HBNBCommand(cmd.Cmd):
         -> If the instance of the class name doesn’t exist for the id,
         print ** no instance found ** (ex: $ destroy BaseModel 121212)
         """
-        lst = []
-        for args in line.split():
-            lst.append(args)
+        import shlex
+
+        lst = shlex.split(line)
+        # print(lst)
         if len(lst) < 1:
             print("** class name missing **")
         elif len(lst) < 2:
@@ -142,7 +144,6 @@ class HBNBCommand(cmd.Cmd):
                 if str(k).startswith(lst[0]):
                     lst2.append(str(my_dict[k]))
             print(lst2)
-        return lst2
 
     def do_update(self, line):
         """
@@ -174,11 +175,13 @@ class HBNBCommand(cmd.Cmd):
         import shlex
 
         lst = shlex.split(line)
+        # print(lst)
         my_dict = storage.all()
         try:
             cls_name = lst[0]
             if cls_name not in class_dict.keys():
                 print("** class doesn't exist **")
+                return
         except Exception:
             print("** class name missing **")
             return
@@ -188,6 +191,7 @@ class HBNBCommand(cmd.Cmd):
             clsid = f"{cls_name}.{ist_id}"
             if clsid not in my_dict.keys():
                 print("** no instance found **")
+                return
         except Exception:
             print("** instance id missing **")
             return
@@ -240,6 +244,7 @@ class HBNBCommand(cmd.Cmd):
             .replace(")", "").replace(",", " ").replace(":", "")\
             .replace("{", " ").replace("}", " ").replace("  ", " ")
         lst = shlex.split(line)
+        # print(lst)
         cls_name = lst[0]
         try:
             method = lst[1]
@@ -247,22 +252,28 @@ class HBNBCommand(cmd.Cmd):
                 if len(lst) == 2:
                     parser_dict[method](cls_name)
                 elif len(lst) == 3:
-                    arguments = f"'{cls_name}' '{lst[2]}'"
+                    arguments = f"{cls_name} {lst[2]}"
+                    # print(arguments)
                     parser_dict[method](arguments)
                 elif len(lst) == 4:
+                    arguments = f"{cls_name} {lst[2]} {lst[3]}"
+                    parser_dict[method](arguments)
+                elif len(lst) > 5:
                     to_dct = lst[3:]
                     dict = {to_dct[i]: to_dct[i + 1]
                             for i in range(0, len(to_dct), 2)}
                     for k, v in dict.items():
                         arguments = f"'{cls_name}' '{lst[2]}' '{k}' '{v}'"
+                        # print(arguments)
                         parser_dict[method](arguments)
                 else:
-                    arguments = f"'{cls_name}' '{lst[2]}' '{lst[3]}' '{lst[4]}'"
+                    arguments = f"'{cls_name}' '{lst[2]}' '{lst[3]}' \
+                        '{lst[4]}'"
                     parser_dict[method](arguments)
             else:
                 raise Exception(f"*** Unknown syntax: {line}")
         except Exception:
-            print(f"*** Unknown syntax: {line}")
+            raise Exception(f"*** Unknown syntax: {line}")
 
     def do_count(self, line: str):
         """counts the instances of class
@@ -270,8 +281,8 @@ class HBNBCommand(cmd.Cmd):
         """
         import shlex
         line = shlex.split(line)
-        my_dict = storage.all()
         my_list = []
+        my_dict = storage.all()
         cls_name = line[0]
         if cls_name not in class_dict.keys():
             print("** class doesn't exist **")

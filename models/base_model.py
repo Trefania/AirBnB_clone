@@ -43,7 +43,8 @@ class BaseModel():
                         self.__dict__[k] = str(v)
                     # If key equals created at or updated at
                     if k == "created_at" or k == "updated_at":
-                        # Assign the dict key to the datetime time of its value.
+                        # Assign the dict key to the datetime \
+                        # time of its value.
                         self.__dict__[k] = dt.strptime(v, format_data)
                     else:
                         # Sets the attributes to their values.
@@ -90,11 +91,13 @@ class BaseModel():
         for k, v in self.__dict__.items():
             # If key equals created at.
             if k == "created_at":
-                # Converts the key value to the datetime format declared earlier
+                # Converts the key value to the\
+                #  datetime format declared earlier
                 our_dict[k] = v.isoformat()
             # If Key equals updated at
             elif k == "updated_at":
-                # Converts the key value to the datetime format.
+                # Converts the key value to the \
+                # datetime format.
                 our_dict[k] = v.isoformat()
             else:
                 # Assings the other keys to their values.

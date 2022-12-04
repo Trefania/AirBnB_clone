@@ -25,38 +25,38 @@ class_dict = {
 }
 
 attributes = {
-            "BaseModel":
-                     {"id": str,
-                      "created_at": datetime,
-                      "updated_at": datetime},
-            "User":
-                     {"email": str,
-                      "password": str,
-                      "first_name": str,
-                      "last_name": str},
-            "State":
-                     {"name": str},
-            "City":
-                     {"state_id": str,
-                      "name": str},
-            "Amenity":
-                     {"name": str},
-            "Place":
-                     {"city_id": str,
-                      "user_id": str,
-                      "name": str,
-                      "description": str,
-                      "number_rooms": int,
-                      "number_bathrooms": int,
-                      "max_guest": int,
-                      "price_by_night": int,
-                      "latitude": float,
-                      "longitude": float,
-                      "amenity_ids": list},
-            "Review":
-            {"place_id": str,
-                         "user_id": str,
-                         "text": str}
+    "BaseModel":
+    {"id": str,
+     "created_at": datetime,
+     "updated_at": datetime},
+    "User":
+    {"email": str,
+     "password": str,
+     "first_name": str,
+     "last_name": str},
+    "State":
+    {"name": str},
+    "City":
+    {"state_id": str,
+     "name": str},
+    "Amenity":
+    {"name": str},
+    "Place":
+    {"city_id": str,
+     "user_id": str,
+     "name": str,
+     "description": str,
+     "number_rooms": int,
+     "number_bathrooms": int,
+     "max_guest": int,
+     "price_by_night": int,
+     "latitude": float,
+     "longitude": float,
+     "amenity_ids": list},
+    "Review":
+    {"place_id": str,
+     "user_id": str,
+     "text": str}
 }
 
 
@@ -65,7 +65,7 @@ class FileStorage():
     A Class that serializes instances to a JSON file
     and deserializes JSON file to instances.
     """
-    __file_path = "test.json"
+    __file_path = "file.json"
     __objects = {}
 
     def __init__(self):
