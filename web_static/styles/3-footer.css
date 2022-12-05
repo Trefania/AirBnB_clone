@@ -1,9 +1,10 @@
 footer{
-	color: white;
+	background-color: white;
 	height: 60px;
 	width: 100%;
-	border-top: 1px #CCCCCC;
+	border-top: 1px solid #CCCCCC;
 	position: fixed;
 	text-align: center;
-	line-height: 6px;
+	line-height: 30px;
+	bottom: 0;
 }
